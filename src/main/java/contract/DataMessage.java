@@ -1,14 +1,14 @@
 package contract;
 
-import transaction.Data;
+import tx.Data;
 
-public class ContractMessage implements Message{
+public class DataMessage implements Message{
     private byte[] sender;
     private String methodName;
     private Class[] parameterTypes;
     private Object[] inputs;
 
-    public ContractMessage(byte[] sender, Data data) {
+    public DataMessage(byte[] sender, Data data) {
         this.sender = sender;
         this.methodName = data.getMethodName();
         this.parameterTypes = data.getParameterTypes();

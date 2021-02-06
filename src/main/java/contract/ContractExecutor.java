@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ContractExecutor {
-    public static Object execute(Trie storageTrie, Class contract, Message message) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static Object execute(Trie storageTrie, Class<?> contract, Message message) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Contract.message = message;
 
         // to check changes after

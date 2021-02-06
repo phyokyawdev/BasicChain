@@ -1,6 +1,7 @@
+package store;
+
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.Options;
-import store.DataStore;
 
 import static org.iq80.leveldb.impl.Iq80DBFactory.factory;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public class LevelDB implements DataStore {
     private DB db;
-    private File file;
+    private final File file;
 
     public LevelDB(File file) {
         this.file = file;

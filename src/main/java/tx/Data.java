@@ -1,4 +1,4 @@
-package transaction;
+package tx;
 
 public class Data {
     private String methodName;

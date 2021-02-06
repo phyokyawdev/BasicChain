@@ -13,8 +13,10 @@ import org.apache.commons.lang3.SerializationUtils;
 import java.lang.reflect.InvocationTargetException;
 
 public class CA implements ContractAccount{
-    private static final byte[] EMPTY_MERKLE_TRIE_ROOT = StringUtil.hexToBytes("C5D2460186F7233C927E7DB2DCC703C0E500B653CA82273B7BFAD8045D85A470");
-    private byte[] address;
+    private static final long serialVersionUID = 1L;
+    private static final byte[] EMPTY_MERKLE_TRIE_ROOT = StringUtil.applyKeccak(new byte[0]);
+
+    private final byte[] address;
     private int nonce;
     private byte[] storageRoot;
     private final byte[] codeHash;
@@ -51,19 +53,14 @@ public class CA implements ContractAccount{
     }
 
     @Override
-    public Object execute(DataStore db, Message message) {
+    public Object execute(DataStore db, Message message) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Trie storageTrie = new MerkleTrie(db, storageRoot);
         byte[] code = db.get(codeHash);
 
         ContractLoader contractLoader = new ContractLoader();
-        Class contract = contractLoader.load(code);
+        Class<?> contract = contractLoader.load(code);
 
-        Object result = null;
-        try {
-            result = ContractExecutor.execute(storageTrie, contract, message);
-        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        Object result = ContractExecutor.execute(storageTrie, contract, message);
 
         // update account if storageRoot change
         if(storageTrie.getRootHash() != storageRoot)

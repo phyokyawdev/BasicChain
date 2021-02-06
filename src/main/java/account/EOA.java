@@ -3,7 +3,8 @@ package account;
 import org.apache.commons.lang3.SerializationUtils;
 
 public class EOA implements Account{
-    private byte[] address;
+    private static final long serialVersionUID = 1L;
+    private final byte[] address;
     private int nonce;
 
     public EOA(byte[] address){

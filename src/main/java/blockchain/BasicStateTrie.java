@@ -1,4 +1,4 @@
-package state;
+package blockchain;
 
 import org.apache.commons.lang3.SerializationUtils;
 
@@ -7,11 +7,11 @@ import store.DataStore;
 import store.MerkleTrie;
 import store.Trie;
 
-public class WorldState implements State{
+public class BasicStateTrie implements StateTrie {
     Trie stateTrie;
     DataStore db;
 
-    public WorldState(DataStore db) {
+    public BasicStateTrie(DataStore db) {
         this.db = db;
         stateTrie = new MerkleTrie(db);
     }
@@ -35,11 +35,12 @@ public class WorldState implements State{
     }
 
     @Override
-    public DataStore getStateDatabase() {
-        return db;
-    }
-
     public void setRootHash(byte[] rootHash) {
         stateTrie.setRoot(rootHash);
+    }
+
+    @Override
+    public DataStore getStateDatabase() {
+        return db;
     }
 }
